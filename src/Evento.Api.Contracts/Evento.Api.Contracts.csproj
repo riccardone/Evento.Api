@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CloudNative.CloudEvents" Version="2.0.0-beta.2" />
+    <PackageReference Include="microsoft.extensions.logging" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
