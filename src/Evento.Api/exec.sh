@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-docker build -t auth0-aspnetcore-mvc-01-login .
-docker run -it -p 3000:3000 auth0-aspnetcore-mvc-01-login
+docker build -t evento-api .
+docker run -it -p 3000:3000 evento-api
