@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,10 +33,10 @@ namespace Evento.Api.Controllers
         /// <response code="404">Unable to ingest the message</response>
         /// <param name="request">The CloudEvent message containing the payload and other message information</param>
         [HttpPost]
-        [ProducesResponseType(typeof(CloudEvent), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CloudEventRequest), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Create([FromBody][Required] CloudEvent request)
+        public async Task<IActionResult> Create([FromBody][Required] CloudEventRequest request)
         {
             try
             {

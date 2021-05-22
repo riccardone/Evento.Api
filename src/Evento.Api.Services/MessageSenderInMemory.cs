@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 using Evento.Api.Contracts;
 
 namespace Evento.Api.Services
@@ -18,7 +18,7 @@ namespace Evento.Api.Services
         /// </summary>
         /// <param name="requests"></param>
         /// <returns></returns>
-        public Task SendAsync(CloudEvent[] requests)
+        public Task SendAsync(CloudEventRequest[] requests)
         {
             foreach (var cloudEventRequest in requests)
             {
@@ -33,7 +33,7 @@ namespace Evento.Api.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Task SendAsync(CloudEvent request)
+        public Task SendAsync(CloudEventRequest request)
         {
             _queue.Enqueue(request);
             return Task.CompletedTask;

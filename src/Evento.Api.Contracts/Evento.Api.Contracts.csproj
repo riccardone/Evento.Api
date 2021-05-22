@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CloudNative.CloudEvents" Version="2.0.0-beta.2" />
+    <PackageReference Include="CloudEventRequest" Version="1.0.0" />
     <PackageReference Include="microsoft.extensions.logging" Version="5.0.0" />
   </ItemGroup>
 

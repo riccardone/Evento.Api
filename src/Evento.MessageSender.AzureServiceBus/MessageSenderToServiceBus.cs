@@ -1,6 +1,6 @@
 using System.Text;
 using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 using Evento.Api.Contracts;
 using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
@@ -27,7 +27,7 @@ namespace Evento.MessageSender.AzureServiceBus
         /// Send a batch of messages to Azure Service Bus
         /// </summary>
         /// <param name="requests">the messages to be sent</param>
-        public async Task SendAsync(CloudEvent[] requests)
+        public async Task SendAsync(CloudEventRequest[] requests)
         {
             foreach (var request in requests)
             {
@@ -39,7 +39,7 @@ namespace Evento.MessageSender.AzureServiceBus
         /// Send one message to Azure Service Bus
         /// </summary>
         /// <param name="request">the message to be sent</param>
-        public async Task SendAsync(CloudEvent request)
+        public async Task SendAsync(CloudEventRequest request)
         {
             var connStringBuilder = new ServiceBusConnectionStringBuilder(_busSettings.Link);
             var busClient = new Microsoft.Azure.ServiceBus.Core.MessageSender(connStringBuilder);

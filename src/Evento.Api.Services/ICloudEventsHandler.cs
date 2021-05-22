@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 
 namespace Evento.Api.Services
 {
     public interface ICloudEventsHandler
     {
-        Task<string> Create(CloudEvent request);
+        Task<string> Create(CloudEventRequest request);
     }
 }

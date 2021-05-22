@@ -1,0 +1,12 @@
+{
+  "type": "creatediary",
+  "source": "myselflog",
+  "id": "123",
+  "time": "2021-05-22T13:16:25.143Z",
+  "dataContentType": "application/json",
+  "dataSchema": "creatediary/1.0",
+  "data": { 
+    "Name": "riccardo",
+    "CorrelationId": "65dd02fb-3136-5eed-b1ab-7c2564129762"
+  }
+}

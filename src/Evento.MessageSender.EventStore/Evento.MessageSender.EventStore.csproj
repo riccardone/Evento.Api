@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EventStore.Client" Version="5.0.11" />
+    <PackageReference Include="CloudEventRequest" Version="1.0.0" />
+    <PackageReference Include="EventStore.Client" Version="5.0.10" />
   </ItemGroup>
 
   <ItemGroup>

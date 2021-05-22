@@ -7,12 +7,11 @@
     <UserSecretsId>a39f5853-0c71-4e4f-9bc6-5d2a333c678d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CloudNative.CloudEvents" Version="2.0.0-beta.2" />
-    <PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.0.0-beta.2" />
+    <PackageReference Include="CloudEventRequest" Version="1.0.0" />
     <PackageReference Include="Finbuckle.MultiTenant" Version="6.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>

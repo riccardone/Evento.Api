@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 using Evento.Api.Contracts;
 using EventStore.ClientAPI;
 using Newtonsoft.Json;
@@ -28,7 +28,7 @@ namespace Evento.MessageSender.EventStore
         /// </summary>
         /// <param name="requests"></param>
         /// <returns></returns>
-        public async Task SendAsync(CloudEvent[] requests)
+        public async Task SendAsync(CloudEventRequest[] requests)
         {
             foreach (var cloudEventRequest in requests)
                 await SendAsync(cloudEventRequest);
@@ -39,11 +39,11 @@ namespace Evento.MessageSender.EventStore
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task SendAsync(CloudEvent request)
+        public async Task SendAsync(CloudEventRequest request)
         {
-            using var conn = _connectionBuilder.Build();
-            conn.ConnectAsync().Wait();
             var streamName = request.Source.IsAbsoluteUri ? request.Source.Host : request.Source.ToString();
+            using var conn = _connectionBuilder.Build();
+            await conn.ConnectAsync();
             await conn.AppendToStreamAsync($"datainput-{streamName}-{DateTime.UtcNow.Year}-{DateTime.UtcNow.Month}",
                 ExpectedVersion.Any, CreateEventData(request, request.Type));
         }

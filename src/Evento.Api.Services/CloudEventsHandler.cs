@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CloudNative.CloudEvents;
+using CloudEventData;
 using Crypto;
 using Evento.Api.Contracts;
 using Evento.Api.Model;
@@ -30,7 +30,7 @@ namespace Evento.Api.Services
         }
 
         private const string IdField = "CorrelationId";
-        public async Task<string> Create(CloudEvent request)
+        public async Task<string> Create(CloudEventRequest request)
         {
             _logger.LogInformation("DataInput->Create is called");
 
@@ -55,7 +55,7 @@ namespace Evento.Api.Services
             return result;
         }
 
-        private bool IsValid(CloudEvent request, out string error)
+        private bool IsValid(CloudEventRequest request, out string error)
         {
             error = null;
             if (request.DataSchema != null && request.DataSchema.IsWellFormedOriginalString())
@@ -87,7 +87,7 @@ namespace Evento.Api.Services
             return true;
         }
 
-        private string CheckIfMessageNeedCorrelationId(CloudEvent request, JObject data, string result)
+        private string CheckIfMessageNeedCorrelationId(CloudEventRequest request, JObject data, string result)
         {
             var hasIdentifier = false;
             foreach (KeyValuePair<string, JToken> property in data)
@@ -109,7 +109,7 @@ namespace Evento.Api.Services
             return result;
         }
 
-        private void EncryptMessageIfNeeded(CloudEvent request)
+        private void EncryptMessageIfNeeded(CloudEventRequest request)
         {
             var tenant = _store.TryGetByIdentifierAsync(request.Source.ToString()).Result;
             if (tenant == null || string.IsNullOrWhiteSpace(tenant.CryptoKey))

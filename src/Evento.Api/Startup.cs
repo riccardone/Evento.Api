@@ -1,6 +1,4 @@
-﻿using CloudNative.CloudEvents;
-using CloudNative.CloudEvents.AspNetCore;
-using Evento.Api.Contracts;
+﻿using Evento.Api.Contracts;
 using Evento.Api.Model;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,10 +30,7 @@ namespace Evento.Api
             services.AddScoped<IPayloadValidator, PayloadValidator>();
             services.AddScoped<ICloudEventsHandler, CloudEventsHandler>();
             services.AddScoped<IMessageSenderFactory, MessageSenderFactory>();
-            services.AddControllers(opts =>
-            {
-                opts.InputFormatters.Insert(0, new CloudEventJsonInputFormatter(new JsonEventFormatter()));
-            });
+            
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             var domain = $"https://{Configuration["Auth0:Domain"]}/";
             services

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CloudNative.CloudEvents" Version="2.0.0-beta.2" />
+    <PackageReference Include="CloudEventRequest" Version="1.0.0" />
     <PackageReference Include="cryptodataservice" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
   </ItemGroup>
