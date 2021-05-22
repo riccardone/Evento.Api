@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CloudEventRequest" Version="1.0.0" />
+    <PackageReference Include="cryptodataservice" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Evento.Api.Model\Evento.Api.Model.csproj" />
+    <ProjectReference Include="..\Evento.MessageSender.AzureServiceBus\Evento.MessageSender.AzureServiceBus.csproj" />
+    <ProjectReference Include="..\Evento.MessageSender.EventStore\Evento.MessageSender.EventStore.csproj" />
+  </ItemGroup>
+
+</Project>
