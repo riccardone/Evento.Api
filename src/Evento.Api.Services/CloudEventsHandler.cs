@@ -30,7 +30,7 @@ namespace Evento.Api.Services
         }
 
         private const string IdField = "CorrelationId";
-        public async Task<string> Create(CloudEventRequest request)
+        public async Task<string> Process(CloudEventRequest request)
         {
             _logger.LogInformation("DataInput->Create is called");
 
