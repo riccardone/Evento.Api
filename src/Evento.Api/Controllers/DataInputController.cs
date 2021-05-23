@@ -40,7 +40,7 @@ namespace Evento.Api.Controllers
         {
             try
             {
-                var result = await _cloudEventsHandler.Create(request);
+                var result = await _cloudEventsHandler.Process(request);
                 return Ok(new { CorrelationId = result });
             }
             catch (Exception e)

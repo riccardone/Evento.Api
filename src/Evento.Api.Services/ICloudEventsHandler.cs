@@ -5,6 +5,6 @@ namespace Evento.Api.Services
 {
     public interface ICloudEventsHandler
     {
-        Task<string> Create(CloudEventRequest request);
+        Task<string> Process(CloudEventRequest request);
     }
 }
