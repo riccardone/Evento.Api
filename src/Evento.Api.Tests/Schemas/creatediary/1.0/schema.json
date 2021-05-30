@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "CorrelationId": {
+      "type": "string"
+    },
+    "Name": {
+      "type": "string"
+    }
+  },
+  "required": [ "CorrelationId", "Name" ]
+}

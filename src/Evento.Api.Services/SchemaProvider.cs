@@ -1,17 +1,16 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Extensions.Configuration;
 
 namespace Evento.Api.Services
 {
     public class SchemaProvider : ISchemaProvider
     {
-        readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
         readonly IResourceLocator _fileLocator;
 
-        public SchemaProvider(IConfiguration configuration, IResourceLocator fileLocator)
+        public SchemaProvider(AppSettings appSettings, IResourceLocator fileLocator)
         {
-            _configuration = configuration;
+            _appSettings = appSettings;
             _fileLocator = fileLocator;
         }
 
@@ -24,8 +23,8 @@ namespace Evento.Api.Services
         /// <returns></returns>
         public string GetSchema(string clientName, string version)
         {
-            var schemaPathRoot = _configuration.GetSection("Schema")["PathRoot"];
-            var schemaFileName = _configuration.GetSection("Schema")["File"];
+            var schemaPathRoot = _appSettings.Schema.PathRoot;
+            var schemaFileName = _appSettings.Schema.File;
             var filePath = $"{schemaPathRoot}/{clientName}/{version}/{schemaFileName}";
 
             if(_fileLocator.Exists(filePath))

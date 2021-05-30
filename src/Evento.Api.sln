@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api.Services", "Even
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api.Contracts", "Evento.Api.Contracts\Evento.Api.Contracts.csproj", "{3B74FE02-65D0-48A9-BC96-8CE2742D56E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evento.Api", "Evento.Api\Evento.Api.csproj", "{F7D4601D-1CAE-4639-8CBB-364496679048}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api", "Evento.Api\Evento.Api.csproj", "{F7D4601D-1CAE-4639-8CBB-364496679048}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evento.Api.Tests", "Evento.Api.Tests\Evento.Api.Tests.csproj", "{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F7D4601D-1CAE-4639-8CBB-364496679048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7D4601D-1CAE-4639-8CBB-364496679048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7D4601D-1CAE-4639-8CBB-364496679048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

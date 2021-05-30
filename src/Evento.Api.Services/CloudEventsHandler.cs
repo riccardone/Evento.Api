@@ -20,7 +20,9 @@ namespace Evento.Api.Services
         private readonly IIdGenerator _idGenerator;
         private readonly IMultiTenantStore<EventoTenantInfo> _store;
 
-        public CloudEventsHandler(IMultiTenantStore<EventoTenantInfo> store, IIdGenerator idGenerator, IPayloadValidator payloadValidator, IMessageSenderFactory messageSenderFactory, ILogger<CloudEventsHandler> logger)
+        public CloudEventsHandler(IMultiTenantStore<EventoTenantInfo> store, IIdGenerator idGenerator,
+            IPayloadValidator payloadValidator, IMessageSenderFactory messageSenderFactory,
+            ILogger<CloudEventsHandler> logger)
         {
             _store = store;
             _idGenerator = idGenerator;
