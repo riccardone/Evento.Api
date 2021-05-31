@@ -20,7 +20,9 @@ namespace Evento.Api.Services
         private readonly IIdGenerator _idGenerator;
         private readonly IMultiTenantStore<EventoTenantInfo> _store;
 
-        public CloudEventsHandler(IMultiTenantStore<EventoTenantInfo> store, IIdGenerator idGenerator, IPayloadValidator payloadValidator, IMessageSenderFactory messageSenderFactory, ILogger<CloudEventsHandler> logger)
+        public CloudEventsHandler(IMultiTenantStore<EventoTenantInfo> store, IIdGenerator idGenerator,
+            IPayloadValidator payloadValidator, IMessageSenderFactory messageSenderFactory,
+            ILogger<CloudEventsHandler> logger)
         {
             _store = store;
             _idGenerator = idGenerator;
@@ -40,10 +42,17 @@ namespace Evento.Api.Services
             if (string.IsNullOrWhiteSpace(request.Type))
                 throw new Exception("Type must be set");
 
-            if (!IsValid(request, out var err))
+            var tenant = _store.TryGetByIdentifierAsync(request.Source.ToString()).Result;
+            if (tenant == null)
+                throw new Exception("Tenant not recognised");
+
+            var isValid = IsValid(request, tenant, out var err);
+            if (!isValid && !tenant.IngestInvalidPayloads)
                 throw new Exception(err);
 
             var data = JsonConvert.DeserializeObject<JObject>(request.Data.ToString());
+
+            IngestInvalidPayloadIfNecessary(request, tenant, isValid, data, err);
 
             var result = CheckIfMessageNeedCorrelationId(request, data, request.Id);
 
@@ -55,7 +64,29 @@ namespace Evento.Api.Services
             return result;
         }
 
-        private bool IsValid(CloudEventRequest request, out string error)
+        private void IngestInvalidPayloadIfNecessary(CloudEventRequest request, EventoTenantInfo tenant, bool isValid, JObject data,
+            string err)
+        {
+            if (!tenant.IngestInvalidPayloads || isValid) return;
+            _logger.LogWarning($"Ingesting invalid payload for tenant: '{tenant.Name}'");
+            var hasValidationErrorField = false;
+            foreach (var property in data)
+            {
+                if (!property.Key.Equals(tenant.ValidationErrorField)) continue;
+                hasValidationErrorField = true;
+                _logger.LogWarning(
+                    $"Invalid payload has an existing validation error. Previous error was: {property.Value}");
+                break;
+            }
+
+            if (!hasValidationErrorField)
+                data.Add(tenant.ValidationErrorField, err);
+            else
+                data[tenant.ValidationErrorField] = err;
+            request.Data = data;
+        }
+
+        private bool IsValid(CloudEventRequest request, EventoTenantInfo tenant, out string error)
         {
             error = null;
             if (request.DataSchema != null && request.DataSchema.IsWellFormedOriginalString())
