@@ -43,3 +43,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: src/Evento.Api.Tests/
+      
+    - name: Build container image
+      run: docker build -t registry.digitalocean.com/riccardone/evento-api:$(echo $GITHUB_SHA | head -c7) .
