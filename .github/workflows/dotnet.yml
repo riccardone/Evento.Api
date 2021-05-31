@@ -45,4 +45,4 @@ jobs:
       working-directory: src/Evento.Api.Tests/
       
     - name: Build container image
-      run: docker build -f src/Evento.Api/Dockerfile -t registry.digitalocean.com/riccardone/evento-api:$(echo $GITHUB_SHA | head -c7) .
+      run: docker build -t registry.digitalocean.com/riccardone/evento-api:$(echo $GITHUB_SHA | head -c7) .
