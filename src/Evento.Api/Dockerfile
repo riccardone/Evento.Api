@@ -1,0 +1,27 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["Evento.Api/Evento.Api.csproj", "Evento.Api/"]
+COPY ["Evento.Api.Services/Evento.Api.Services.csproj", "Evento.Api.Services/"]
+COPY ["Evento.MessageSender.AzureServiceBus/Evento.MessageSender.AzureServiceBus.csproj", "Evento.MessageSender.AzureServiceBus/"]
+COPY ["Evento.Api.Contracts/Evento.Api.Contracts.csproj", "Evento.Api.Contracts/"]
+COPY ["Evento.MessageSender.EventStore/Evento.MessageSender.EventStore.csproj", "Evento.MessageSender.EventStore/"]
+COPY ["Evento.Api.Model/Evento.Api.Model.csproj", "Evento.Api.Model/"]
+RUN dotnet restore "Evento.Api/Evento.Api.csproj"
+COPY . .
+WORKDIR "/src/Evento.Api"
+RUN dotnet build "Evento.Api.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Evento.Api.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Evento.Api.dll"]
