@@ -56,5 +56,5 @@ jobs:
       run: doctl registry login --expiry-seconds 600
       
     - name: Push image to DigitalOcean Container Registry
-      run: docker push registry.digitalocean.com/asb/static-example:$(echo $GITHUB_SHA | head -c7)
+      run: docker push registry.digitalocean.com/riccardone/evento-api:$(echo $GITHUB_SHA | head -c7)
 
