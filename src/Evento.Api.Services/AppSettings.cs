@@ -3,6 +3,7 @@
     public class AppSettings
     {
         public Schema Schema { get; set; }
+        public string ValidationErrorField { get; set; }
     }
 
     public class Schema

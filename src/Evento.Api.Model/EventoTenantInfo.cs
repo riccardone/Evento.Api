@@ -10,5 +10,6 @@ namespace Evento.Api.Model
         public string AdminEmail { get; set; }
         public string Domain { get; set; }
         public bool IngestInvalidPayloads { get; set; }
+        public string ValidationErrorField { get; set; }
     }
 }

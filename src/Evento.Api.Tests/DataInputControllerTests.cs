@@ -28,7 +28,7 @@ namespace Evento.Api.Tests
             var sut = BuildInsuringController(new MessageSenderInMemory(), new FakePayloadValidatorForInvalidPayloads(), true);
 
             // Act
-            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest));
+            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest)).Result;
 
             // Verify
             Assert.IsInstanceOf<CreatedAtActionResult>(result);
@@ -41,7 +41,7 @@ namespace Evento.Api.Tests
             var sut = BuildInsuringController(new MessageSenderInMemory(), new FakePayloadValidatorForInvalidPayloads(), true);
 
             // Act
-            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequestWithExistingValidationError));
+            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequestWithExistingValidationError)).Result;
 
             // Verify
             Assert.IsInstanceOf<CreatedAtActionResult>(result);
@@ -54,7 +54,7 @@ namespace Evento.Api.Tests
             var sut = BuildInsuringController(new MessageSenderInMemory(), new FakePayloadValidatorForInvalidPayloads(), false);
 
             // Act
-            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest));
+            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest)).Result;
 
             // Verify
             Assert.IsInstanceOf<BadRequestObjectResult>(result);

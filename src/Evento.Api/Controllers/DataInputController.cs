@@ -5,6 +5,7 @@ using CloudEventData;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Evento.Api.Controllers
 {
@@ -26,6 +27,16 @@ namespace Evento.Api.Controllers
             _cloudEventsHandler = cloudEventsHandler;
         }
 
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(JObject), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<JObject>> Get(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Ingest message synchronously
         /// </summary>
@@ -41,7 +52,7 @@ namespace Evento.Api.Controllers
             try
             {
                 var result = await _cloudEventsHandler.Process(request);
-                return Ok(new { CorrelationId = result });
+                return CreatedAtAction(nameof(Get), new { CorrelationId = result });
             }
             catch (Exception e)
             {

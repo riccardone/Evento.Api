@@ -9,6 +9,7 @@ namespace Evento.Api.Tests.Fakes
     public class FakeMultitenantStore : IMultiTenantStore<EventoTenantInfo>
     {
         private readonly bool _ingestInvalidPayloads;
+        private const string ValidationErrorField = "ValidationError";
 
         public FakeMultitenantStore()
         {
@@ -53,11 +54,12 @@ namespace Evento.Api.Tests.Fakes
 
         private EventoTenantInfo BuildTenant(string id, string identifier)
         {
-            return new EventoTenantInfo
+            return new()
             {
                 Identifier = identifier,
                 CryptoKey = "3x+bfONnKwILntoe1hBELOpD1u+1cp2ZceRVnbW2fAs=",
-                IngestInvalidPayloads = _ingestInvalidPayloads
+                IngestInvalidPayloads = _ingestInvalidPayloads,
+                ValidationErrorField = ValidationErrorField
             };
         }
 
