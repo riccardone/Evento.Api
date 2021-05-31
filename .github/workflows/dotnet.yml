@@ -3,26 +3,46 @@ name: .NET
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'config/**'
+      - 'src/**'
+      - 'src/Evento.Api/Dockerfile'
+      - '.github/workflows/**'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'config/**'
+      - 'src/**'
+      - 'src/Evento.Api/Dockerfile'
+      - '.github/workflows/**'
 
 jobs:
   build:
-
+    name: Build, push, and deploy
     runs-on: ubuntu-latest
 
     steps:
+    
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+        
+    - name: Update SHA
+      run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/src/_meta
+        
     - name: Restore dependencies
       run: dotnet restore
       working-directory: src/
+      
     - name: Build
       run: dotnet build --no-restore
       working-directory: src/
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: src/Evento.Api.Tests/
+      
+    - name: Build container image
+      run: docker build -f src/Evento.Api/Dockerfile -t registry.digitalocean.com/riccardone/evento-api:$(echo $GITHUB_SHA | head -c7) .
