@@ -6,15 +6,13 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
-COPY ["Evento.Api/Evento.Api.csproj", "Evento.Api/"]
-RUN dotnet restore "Evento.Api/Evento.Api.csproj"
+COPY ["./src/Evento.Api/Evento.Api.csproj", "Evento.Api/"]
+RUN dotnet restore "./src/Evento.Api/Evento.Api.csproj"
 COPY . .
-WORKDIR /src/Evento.Api
-RUN dotnet build "Evento.Api.csproj" -c Release -o /app/build
+RUN dotnet build "./src/Evento.Api/Evento.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Evento.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "./src/Evento.Api/Evento.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
