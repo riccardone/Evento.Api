@@ -30,7 +30,7 @@ jobs:
         dotnet-version: 5.0.x
         
     - name: Update SHA
-      run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/site/_meta
+      run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/src/_meta
         
     - name: Restore dependencies
       run: dotnet restore
