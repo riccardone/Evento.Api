@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Evento.Api/Evento.Api.csproj", "Evento.Api/"]
+COPY ["/Evento.Api/Evento.Api.csproj", "Evento.Api/"]
 RUN dotnet restore "Evento.Api/Evento.Api.csproj"
 COPY . .
 WORKDIR "/src/Evento.Api"
