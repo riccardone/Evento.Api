@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 COPY ["./src/Evento.Api/Evento.Api.csproj", "Evento.Api/"]
-RUN dotnet restore "./src/Evento.Api/Evento.Api.csproj"
+RUN dotnet restore "Evento.Api/Evento.Api.csproj"
 COPY . .
 RUN dotnet build "./src/Evento.Api/Evento.Api.csproj" -c Release -o /app/build
 
