@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api.Contracts", "Eve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api", "Evento.Api\Evento.Api.csproj", "{F7D4601D-1CAE-4639-8CBB-364496679048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evento.Api.Tests", "Evento.Api.Tests\Evento.Api.Tests.csproj", "{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evento.Api.Tests", "Evento.Api.Tests\Evento.Api.Tests.csproj", "{4F2F0E28-A84B-4794-98FF-2A4CE0A1610E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

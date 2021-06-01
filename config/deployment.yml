@@ -8,7 +8,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: evento-api
+      app: evento-api-pod
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -17,10 +17,10 @@ spec:
   template:
     metadata:
       labels:
-        app: evento-api
+        app: evento-api-pod
     spec:
       containers:
-      - name: evento-api
+      - name: evento-api-container
         image: <IMAGE>
         ports:
         - containerPort: 5000
@@ -28,7 +28,7 @@ spec:
           requests:
             cpu: 100m
           limits:
-            cpu: 100m
+            cpu: "100m"
       #imagePullSecrets:
       #- name: regcred
 ---
