@@ -15,6 +15,12 @@ namespace Evento.Api.Services
             _fileLocator = fileLocator;
         }
 
+        public SchemaProvider(AppSettings appSettings, IResourceLocator fileLocator)
+        {
+            _appSettings = appSettings;
+            _fileLocator = fileLocator;
+        }
+
         /// <summary>
         /// Returns the schema for the given client and version
         /// throws an exception if the file is not found
