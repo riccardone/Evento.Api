@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace Evento.Api.Services
 {
@@ -8,9 +9,9 @@ namespace Evento.Api.Services
         private readonly AppSettings _appSettings;
         readonly IResourceLocator _fileLocator;
 
-        public SchemaProvider(AppSettings appSettings, IResourceLocator fileLocator)
+        public SchemaProvider(IConfiguration config, IResourceLocator fileLocator)
         {
-            _appSettings = appSettings;
+            _appSettings = config.Get<AppSettings>();
             _fileLocator = fileLocator;
         }
 

@@ -15,6 +15,7 @@ using Evento.Api.Contracts;
 using Evento.Api.Model;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Prometheus;
 
 namespace Evento.Api
@@ -58,6 +59,8 @@ namespace Evento.Api
             });
             services.AddControllers().AddNewtonsoftJson();
             services.AddHealthChecks().ForwardToPrometheus();
+            services.Configure<KestrelServerOptions>(
+                Configuration.GetSection("Kestrel"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
