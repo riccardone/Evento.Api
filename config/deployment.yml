@@ -30,6 +30,8 @@ spec:
           limits:
             cpu: "100m"
             memory: 256Mi      
+      imagePullSecrets:
+      - name: asb
 # ---
 # apiVersion: v1
 # kind: Service
