@@ -1,4 +1,4 @@
-name: .NET build push and deploy to kubernetes
+name: Build push deploy to kubernetes
 
 on:
   push:

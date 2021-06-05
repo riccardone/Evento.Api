@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: evento-api
-  #labels:
-  #  app: evento-api
+  labels:
+    app: evento-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: evento-api-pod
+      app: evento-api
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -17,13 +17,13 @@ spec:
   template:
     metadata:
       labels:
-        app: evento-api-pod
+        app: evento-api
     spec:
       containers:
-      - name: evento-api-container
+      - name: evento-api
         image: <IMAGE>
         ports:
-        - containerPort: 5000
+        - containerPort: 80
         resources:
           requests:
             cpu: 100m
@@ -46,6 +46,6 @@ spec:
     - name: https
       protocol: TCP
       port: 443
-      targetPort: 5000
+      targetPort: 80
   selector:
     app: evento-api
