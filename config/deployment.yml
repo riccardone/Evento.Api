@@ -30,8 +30,8 @@ spec:
           limits:
             cpu: "100m"
             memory: 256Mi      
-      imagePullSecrets:
-      - name: default-token-9k9zj
+      # imagePullSecrets:
+      # - name: default-token-9k9zj
 # ---
 # apiVersion: v1
 # kind: Service
