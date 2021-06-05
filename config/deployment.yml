@@ -31,7 +31,7 @@ spec:
             cpu: "100m"
             memory: 256Mi      
       imagePullSecrets:
-      - name: asb
+      - name: default-token-9k9zj
 # ---
 # apiVersion: v1
 # kind: Service
