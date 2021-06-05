@@ -21,8 +21,7 @@ spec:
     spec:
       containers:
       - name: evento-api
-        image: <IMAGE>
-        imagePullPolicy: Never
+        image: <IMAGE>        
         ports:
         - containerPort: 80
         resources:
