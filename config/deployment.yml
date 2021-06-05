@@ -30,21 +30,21 @@ spec:
           limits:
             cpu: "100m"
             memory: 256Mi      
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: evento-api-service
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: "doctl-action.do-api.dev"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "55db8c92-be68-4388-ba86-c18339da5847"
-    service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
-spec:
-  type: LoadBalancer
-  ports:
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 80
-  selector:
-    app: evento-api
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: evento-api-service
+#   annotations:
+#     external-dns.alpha.kubernetes.io/hostname: "doctl-action.do-api.dev"
+#     service.beta.kubernetes.io/do-loadbalancer-certificate-id: "55db8c92-be68-4388-ba86-c18339da5847"
+#     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+# spec:
+#   type: LoadBalancer
+#   ports:
+#     - name: https
+#       protocol: TCP
+#       port: 443
+#       targetPort: 80
+#   selector:
+#     app: evento-api
