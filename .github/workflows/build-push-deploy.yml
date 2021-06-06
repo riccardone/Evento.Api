@@ -1,13 +1,6 @@
 name: Build push deploy to kubernetes
 
-on:
-  push:
-    branches: [ master ]
-    paths:
-      - 'config/**'
-      - 'src/**'
-      - 'src/Evento.Api/Dockerfile'
-      - '.github/workflows/**'
+on:  
   pull_request:
     branches: [ master ]
     paths:
