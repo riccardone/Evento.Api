@@ -17,4 +17,7 @@ RUN dotnet publish "./src/Evento.Api/Evento.Api.csproj" -c Release -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# To override default ports
+#ENV ASPNETCORE_URLS=http://+:5000
+#ENV ASPNETCORE_HTTPS_PORT=https://+:5001
 ENTRYPOINT ["dotnet", "Evento.Api.dll"]
