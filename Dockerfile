@@ -19,5 +19,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 # To override default ports
 #ENV ASPNETCORE_URLS=http://+:5000
-#ENV ASPNETCORE_HTTPS_PORT=https://+:5001
+ENV ASPNETCORE_HTTPS_PORT=https://+:443
 ENTRYPOINT ["dotnet", "Evento.Api.dll"]
