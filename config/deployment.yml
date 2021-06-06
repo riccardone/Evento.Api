@@ -50,7 +50,7 @@ metadata:
   name: evento-api-service  
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "doctl-action.do-api.dev"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "55db8c92-be68-4388-ba86-c18339da5847"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "4541eb86-05e6-40ef-992c-4851c68432aa"
     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
 spec:
   type: LoadBalancer
