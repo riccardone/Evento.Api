@@ -23,6 +23,7 @@ spec:
       - name: evento-api
         image: <IMAGE>        
         ports:
+        - containerPort: 5000
         - containerPort: 5001
         resources:
           requests:
@@ -34,13 +35,13 @@ spec:
         livenessProbe:
           httpGet:
             path: "/health"
-            port: 5001
+            port: 5000
           initialDelaySeconds: 3
           periodSeconds: 3
         readinessProbe:
           httpGet:
             path: "/health"
-            port: 5001
+            port: 5000
           initialDelaySeconds: 5
           periodSeconds: 5          
 ---
