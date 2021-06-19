@@ -52,8 +52,8 @@ namespace Evento.Api
             });
             services.AddControllers().AddNewtonsoftJson();
             services.AddHealthChecks().ForwardToPrometheus();
-            services.Configure<KestrelServerOptions>(
-                Configuration.GetSection("Kestrel"));
+            //services.Configure<KestrelServerOptions>(
+            //    Configuration.GetSection("Kestrel"));
             //services.AddHttpsRedirection(options => options.HttpsPort = 443);
         }
 
@@ -65,11 +65,6 @@ namespace Evento.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Evento.Api v1"));
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
             //app.UseHttpsRedirection();
