@@ -54,7 +54,7 @@ namespace Evento.Api
             services.AddHealthChecks().ForwardToPrometheus();
             services.Configure<KestrelServerOptions>(
                 Configuration.GetSection("Kestrel"));
-            services.AddHttpsRedirection(options => options.HttpsPort = 443);
+            //services.AddHttpsRedirection(options => options.HttpsPort = 443);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +72,7 @@ namespace Evento.Api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
