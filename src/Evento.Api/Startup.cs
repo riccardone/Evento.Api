@@ -9,6 +9,7 @@ using Evento.Api.Model;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.IdentityModel.Logging;
 using Prometheus;
 
 namespace Evento.Api
@@ -55,6 +56,7 @@ namespace Evento.Api
             //services.Configure<KestrelServerOptions>(
             //    Configuration.GetSection("Kestrel"));
             //services.AddHttpsRedirection(options => options.HttpsPort = 443);
+            IdentityModelEventSource.ShowPII = true;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
