@@ -1,4 +1,4 @@
-name: Build push deploy to kubernetes
+name: Build push deploy to TEST environment
 
 on:  
   pull_request:
