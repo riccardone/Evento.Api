@@ -1,16 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Evento.Api.Contracts;
 using Evento.Api.Model;
 using Evento.Api.Services;
@@ -59,8 +52,9 @@ namespace Evento.Api
             });
             services.AddControllers().AddNewtonsoftJson();
             services.AddHealthChecks().ForwardToPrometheus();
-            services.Configure<KestrelServerOptions>(
-                Configuration.GetSection("Kestrel"));
+            //services.Configure<KestrelServerOptions>(
+            //    Configuration.GetSection("Kestrel"));
+            //services.AddHttpsRedirection(options => options.HttpsPort = 443);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,16 +63,12 @@ namespace Evento.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Evento.Api v1"));
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Evento.Api v1"));
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

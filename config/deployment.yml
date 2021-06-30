@@ -9,11 +9,11 @@ spec:
   selector:
     matchLabels:
       app: evento-api
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
+  # strategy:
+  #   rollingUpdate:
+  #     maxSurge: 1
+  #     maxUnavailable: 1
+  # minReadySeconds: 5
   template:
     metadata:
       labels:
@@ -23,7 +23,9 @@ spec:
       - name: evento-api
         image: <IMAGE>        
         ports:
-        - containerPort: 80
+          - name: http
+            containerPort: 80
+            protocol: TCP                  
         resources:
           requests:
             cpu: 100m
@@ -31,18 +33,18 @@ spec:
           limits:
             cpu: 500m
             memory: 128Mi
-        livenessProbe:
-          httpGet:
-            path: "/health"
-            port: 80
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: "/health"
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 5          
+        # livenessProbe:
+        #   httpGet:
+        #     path: "/health"
+        #     port: 80
+        #   initialDelaySeconds: 6
+        #   periodSeconds: 12
+        # readinessProbe:
+        #   httpGet:
+        #     path: "/health"
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 20
 ---
 apiVersion: v1
 kind: Service
@@ -53,11 +55,11 @@ metadata:
     service.beta.kubernetes.io/do-loadbalancer-certificate-id: "4541eb86-05e6-40ef-992c-4851c68432aa"
     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
 spec:
-  type: LoadBalancer
-  ports:
-    - name: https
+  type: ClusterIP
+  ports:    
+    - port: 80
+      targetPort: http
       protocol: TCP
-      port: 443
-      targetPort: 80
+      name: http
   selector:
     app: evento-api

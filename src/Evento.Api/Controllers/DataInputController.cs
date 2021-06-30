@@ -40,7 +40,7 @@ namespace Evento.Api.Controllers
         /// <summary>
         /// Ingest message synchronously
         /// </summary>
-        /// <response code="201">The message has been successfully ingested</response>
+        /// <response code="201">The message has been ingested</response>
         /// <response code="404">Unable to ingest the message</response>
         /// <param name="request">The CloudEvent message containing the payload and other message information</param>
         [HttpPost]
