@@ -1,4 +1,4 @@
-name: Build push deploy to TEST environment
+name: Deploy to DEV
 
 on:  
   pull_request:
