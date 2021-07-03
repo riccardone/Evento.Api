@@ -25,7 +25,10 @@ spec:
         ports:
           - name: http
             containerPort: 80
-            protocol: TCP                  
+            protocol: TCP        
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app          
         resources:
           requests:
             cpu: 100m
@@ -33,6 +36,10 @@ spec:
           limits:
             cpu: 500m
             memory: 128Mi
+      volumes:
+      - name: config-volume
+        configMap:
+          name: evento-api-config
         # livenessProbe:
         #   httpGet:
         #     path: "/health"
