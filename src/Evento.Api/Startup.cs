@@ -8,7 +8,7 @@ using Evento.Api.Contracts;
 using Evento.Api.Model;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Prometheus;
 
@@ -22,10 +22,12 @@ namespace Evento.Api
         }
 
         public IConfiguration Configuration { get; }
+        public ILogger<Startup> Logger { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Logger.LogInformation("starting...");
             services.AddScoped<IIdGenerator, IdGenerator>();
             services.AddScoped<IResourceLocator, FileLocator>();
             services.AddScoped<ISchemaProvider, SchemaProvider>();

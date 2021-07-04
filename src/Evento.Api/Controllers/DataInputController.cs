@@ -5,6 +5,7 @@ using CloudEventData;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Evento.Api.Controllers
@@ -17,14 +18,16 @@ namespace Evento.Api.Controllers
     [ApiExplorerSettings(IgnoreApi = false)]
     public class DataInputController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly ICloudEventsHandler _cloudEventsHandler;
 
         /// <summary>
         /// Build controller
         /// </summary>
-        public DataInputController(ICloudEventsHandler cloudEventsHandler)
+        public DataInputController(ICloudEventsHandler cloudEventsHandler, ILogger logger)
         {
             _cloudEventsHandler = cloudEventsHandler;
+            _logger = logger;
         }
 
         [Route("{id}")]
@@ -51,6 +54,7 @@ namespace Evento.Api.Controllers
         {
             try
             {
+                _logger.LogInformation("I've been called");
                 var result = await _cloudEventsHandler.Process(request);
                 return CreatedAtAction(nameof(Get), new { CorrelationId = result });
             }
