@@ -18,13 +18,13 @@ namespace Evento.Api.Controllers
     [ApiExplorerSettings(IgnoreApi = false)]
     public class DataInputController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<DataInputController> _logger;
         private readonly ICloudEventsHandler _cloudEventsHandler;
 
         /// <summary>
         /// Build controller
         /// </summary>
-        public DataInputController(ICloudEventsHandler cloudEventsHandler, ILogger logger)
+        public DataInputController(ICloudEventsHandler cloudEventsHandler, ILogger<DataInputController> logger)
         {
             _cloudEventsHandler = cloudEventsHandler;
             _logger = logger;
