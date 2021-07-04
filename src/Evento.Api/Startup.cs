@@ -16,14 +16,14 @@ namespace Evento.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration, ILoggerFactory logger)
         {
             Configuration = configuration;
-            Logger = logger;
+            Logger = logger.CreateLogger("ciccio");
         }
 
         public IConfiguration Configuration { get; }
-        public ILogger<Startup> Logger { get; }
+        public ILogger Logger { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
