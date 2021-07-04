@@ -18,7 +18,7 @@ namespace Evento.Api.Tests
                     new SchemaProvider(
                         new AppSettings() {Schema = new Schema {File = "schema.json", PathRoot = "Schemas"}},
                         new FileLocator())), new FakeMessageSenderFactory(new MessageSenderInMemory()),
-                new NullLogger<CloudEventsHandler>()));
+                new NullLogger<CloudEventsHandler>()), new NullLogger<DataInputController>());
         }
 
         [Test]
