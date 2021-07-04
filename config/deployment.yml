@@ -33,9 +33,9 @@ spec:
           limits:
             cpu: 500m
             memory: 128Mi      
-        # envFrom:
-        # - configMapRef:
-        #     name: evento-api-config
+        envFrom:
+        - configMapRef:
+            name: evento-api-config
         # livenessProbe:
         #   httpGet:
         #     path: "/health"
