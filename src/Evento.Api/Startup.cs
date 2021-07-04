@@ -28,6 +28,13 @@ namespace Evento.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Do the service register here and extra stuff you want
+            services.AddLogging(config =>
+            {
+                config.AddDebug();
+                config.AddConsole();
+                //etc
+            });
             Logger.LogInformation("starting...");
             services.AddScoped<IIdGenerator, IdGenerator>();
             services.AddScoped<IResourceLocator, FileLocator>();
