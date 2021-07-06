@@ -8,7 +8,7 @@ using Evento.Api.Contracts;
 using Evento.Api.Model;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Prometheus;
 
