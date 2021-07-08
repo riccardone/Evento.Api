@@ -54,7 +54,6 @@ namespace Evento.Api.Controllers
         {
             try
             {
-                _logger.LogInformation("I've been called");
                 var result = await _cloudEventsHandler.Process(request);
                 return CreatedAtAction(nameof(Get), new { CorrelationId = result });
             }
