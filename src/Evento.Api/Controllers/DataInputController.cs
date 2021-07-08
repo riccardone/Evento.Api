@@ -60,6 +60,7 @@ namespace Evento.Api.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error while processing: {e.GetBaseException().Message}");
                 return BadRequest(e);
             }
         }
