@@ -52,16 +52,8 @@ namespace Evento.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Create([FromBody][Required] CloudEventRequest request)
         {
-            try
-            {
-                var result = await _cloudEventsHandler.Process(request);
-                return CreatedAtAction(nameof(Get), new { CorrelationId = result });
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error while processing: {e.GetBaseException().Message}");
-                return BadRequest(e);
-            }
+            var result = await _cloudEventsHandler.Process(request);
+            return CreatedAtAction(nameof(Get), new { CorrelationId = result });
         }
     }
 }
