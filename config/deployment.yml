@@ -35,7 +35,7 @@ spec:
             memory: 128Mi   
         volumeMounts:
           - name: config-volume
-            mountPath: /app/config   
+            mountPath: /app   
       volumes:
       - name: config-volume
         configMap:
