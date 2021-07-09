@@ -34,7 +34,7 @@ namespace Evento.Api.Services
         private const string IdField = "CorrelationId";
         public async Task<string> Process(CloudEventRequest request)
         {
-            if (!request.DataContentType.Equals("application/json"))
+            if (request.DataContentType == null || !request.DataContentType.Equals("application/json"))
                 throw new Exception("DataContentType must be: 'application/json'");
 
             if (string.IsNullOrWhiteSpace(request.Type))
