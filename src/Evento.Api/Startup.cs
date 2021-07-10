@@ -77,6 +77,8 @@ namespace Evento.Api
 
             //app.UseHttpsRedirection();
 
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+
             app.UseRouting();
 
             app.UseAuthentication();

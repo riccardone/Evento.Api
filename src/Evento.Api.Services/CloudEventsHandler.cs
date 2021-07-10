@@ -46,7 +46,7 @@ namespace Evento.Api.Services
 
             var isValid = IsValid(request, tenant, out var err);
             if (!isValid && !tenant.IngestInvalidPayloads)
-                throw new Exception(err);
+                throw new BusinessException(err);
 
             var data = JsonConvert.DeserializeObject<JObject>(request.Data.ToString());
 

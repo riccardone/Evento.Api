@@ -53,11 +53,10 @@ namespace Evento.Api.Tests
             // Setup
             var sut = BuildInsuringController(new MessageSenderInMemory(), new FakePayloadValidatorForInvalidPayloads(), false);
 
-            // Act
-            var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest)).Result;
-
-            // Verify
-            Assert.IsInstanceOf<BadRequestObjectResult>(result);
+            // Act and Verify
+            Assert.That(
+                async () => await sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary",
+                    Helpers.SampleJsonForInvalidRequest)), Throws.Exception.TypeOf<BusinessException>());
         }
     }
 }
