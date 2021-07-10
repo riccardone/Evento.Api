@@ -43,7 +43,7 @@ namespace Evento.Api
                 })
                 .ConfigureAppConfiguration(c =>
                 {
-                    c.AddJsonFile("config/appsettings-configmap.json", optional: true, reloadOnChange: true); // for config maps mounted in kubernetes
+                    c.AddJsonFile("config/appsettings.docker.json", optional: true, reloadOnChange: true); // for config maps mounted in kubernetes
                     c.AddEnvironmentVariables();
                 })
                 .UseNLog();  
