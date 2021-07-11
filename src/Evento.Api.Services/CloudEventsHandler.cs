@@ -59,6 +59,8 @@ namespace Evento.Api.Services
             var sender = _messageSenderFactory.Build(request.Source.ToString());
             await sender.SendAsync(request);
 
+            _logger.LogInformation("request sent correctly down the bus");
+
             return result;
         }
 
