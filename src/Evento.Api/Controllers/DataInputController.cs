@@ -35,6 +35,7 @@ namespace Evento.Api.Controllers
         [ProducesResponseType(typeof(JObject), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ActionName(nameof(Get))]
         public async Task<ActionResult<JObject>> Get(string id)
         {
             throw new NotImplementedException();
@@ -53,7 +54,7 @@ namespace Evento.Api.Controllers
         public async Task<IActionResult> Create([FromBody][Required] CloudEventRequest request)
         {
             var result = await _cloudEventsHandler.Process(request);
-            return CreatedAtAction(nameof(Get), new { CorrelationId = result });
+            return Ok(new {id = result}); //CreatedAtAction(nameof(Get), new { id = result });
         }
     }
 }

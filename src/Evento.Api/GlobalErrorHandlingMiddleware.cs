@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Net;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Evento.Api.Services;
 using Microsoft.AspNetCore.Http;
+using NLog;
 
 namespace Evento.Api
 {
     public class GlobalErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public GlobalErrorHandlingMiddleware(RequestDelegate next)
         {
@@ -44,6 +47,8 @@ namespace Evento.Api
                 };
 
                 var errorJson = JsonSerializer.Serialize(errorResponse);
+
+                _logger.Error(ex);
 
                 await response.WriteAsync(errorJson);
             }
