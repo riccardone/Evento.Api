@@ -54,7 +54,7 @@ namespace Evento.Api.Controllers
         public async Task<IActionResult> Create([FromBody][Required] CloudEventRequest request)
         {
             var result = await _cloudEventsHandler.Process(request);
-            return CreatedAtAction(nameof(Get), new { id = result });
+            return Ok(new {id = result}); //CreatedAtAction(nameof(Get), new { id = result });
         }
     }
 }
