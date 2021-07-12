@@ -44,7 +44,7 @@ namespace Evento.MessageSender.EventStore
             var streamName = request.Source.IsAbsoluteUri ? request.Source.Host : request.Source.ToString();
             using var conn = _connectionBuilder.Build();
             await conn.ConnectAsync();
-            await conn.AppendToStreamAsync($"datainput-{streamName}-{DateTime.UtcNow.Year}-{DateTime.UtcNow.Month}",
+            await conn.AppendToStreamAsync($"{streamName}-{DateTime.UtcNow.Year}-{DateTime.UtcNow.Month}",
                 ExpectedVersion.Any, CreateEventData(request, request.Type));
         }
 
