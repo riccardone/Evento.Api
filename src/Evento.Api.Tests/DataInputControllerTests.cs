@@ -31,7 +31,7 @@ namespace Evento.Api.Tests
             var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequest)).Result;
 
             // Verify
-            Assert.IsInstanceOf<CreatedAtActionResult>(result);
+            Assert.IsInstanceOf<OkObjectResult>(result);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Evento.Api.Tests
             var result = sut.Create(Helpers.BuildCloudRequest("creatediary/1.0", "myselflog", "creatediary", Helpers.SampleJsonForInvalidRequestWithExistingValidationError)).Result;
 
             // Verify
-            Assert.IsInstanceOf<CreatedAtActionResult>(result);
+            Assert.IsInstanceOf<OkObjectResult>(result);
         }
 
         [Test]
