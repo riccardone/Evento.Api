@@ -5,7 +5,7 @@
   "Parameters": {},
   "Conditions": {},
   "Resources": {
-    "AspNetCoreFunction": {
+    "Function": {
       "Type": "AWS::Serverless::Function",
       "Properties": {
         "PackageType": "Image",
