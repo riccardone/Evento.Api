@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using CloudEventData;
 using Crypto;
@@ -15,13 +14,18 @@ namespace Evento.Api.Services
     public class CloudEventsHandler : ICloudEventsHandler
     {
         private readonly ILogger<CloudEventsHandler> _logger;
-        private readonly IMessageSenderFactory _messageSenderFactory;
         private readonly IPayloadValidator _payloadValidator;
+        private readonly IMessageSenderFactory _messageSenderFactory;
         private readonly IIdGenerator _idGenerator;
         private readonly IMultiTenantStore<EventoTenantInfo> _store;
 
-        public CloudEventsHandler(IMultiTenantStore<EventoTenantInfo> store, IIdGenerator idGenerator,
-            IPayloadValidator payloadValidator, IMessageSenderFactory messageSenderFactory,
+        private const string IdField = "CorrelationId";
+
+        public CloudEventsHandler(
+            IMultiTenantStore<EventoTenantInfo> store,
+            IIdGenerator idGenerator,
+            IPayloadValidator payloadValidator,
+            IMessageSenderFactory messageSenderFactory,
             ILogger<CloudEventsHandler> logger)
         {
             _store = store;
@@ -31,26 +35,43 @@ namespace Evento.Api.Services
             _logger = logger;
         }
 
-        private const string IdField = "CorrelationId";
-        public async Task<string> Process(CloudEventRequest request)
+        public async Task<string> Process(CloudEventRequest request, bool validate = true)
         {
-            if (request.DataContentType == null || !request.DataContentType.Equals("application/json"))
-                throw new Exception("DataContentType must be: 'application/json'");
+            if (object.ReferenceEquals(null, request.Data))
+            {
+                throw new BusinessException("Data must be set");
+            }
+
+            if (!(request.DataContentType is "application/json"))
+            {
+                throw new BusinessException("DataContentType must be: 'application/json'");
+            }
 
             if (string.IsNullOrWhiteSpace(request.Type))
-                throw new Exception("Type must be set");
+            {
+                throw new BusinessException("Type must be set");
+            }
 
-            var tenant = _store.TryGetByIdentifierAsync(request.Source.ToString()).Result;
+            var tenant = await _store.TryGetByIdentifierAsync(request.Source.ToString());
+
             if (tenant == null)
-                throw new Exception("Tenant not recognised");
-
-            var isValid = IsValid(request, tenant, out var err);
-            if (!isValid && !tenant.IngestInvalidPayloads)
-                throw new BusinessException(err);
+            {
+                throw new BusinessException("Tenant not recognised");
+            }
 
             var data = JsonConvert.DeserializeObject<JObject>(request.Data.ToString());
 
-            IngestInvalidPayloadIfNecessary(request, tenant, isValid, data, err);
+            if (validate)
+            {
+                var isValid = IsValid(request, tenant, out var err);
+
+                if (!isValid && !tenant.IngestInvalidPayloads)
+                {
+                    throw new BusinessException(err);
+                }
+
+                IngestInvalidPayloadIfNecessary(request, tenant, isValid, data, err);
+            }
 
             var result = CheckIfMessageNeedCorrelationId(request, data, request.Id);
 
@@ -59,30 +80,53 @@ namespace Evento.Api.Services
             var sender = _messageSenderFactory.Build(request.Source.ToString());
             await sender.SendAsync(request);
 
-            _logger.LogInformation("request sent correctly down the bus");
-
             return result;
         }
 
-        private void IngestInvalidPayloadIfNecessary(CloudEventRequest request, EventoTenantInfo tenant, bool isValid, JObject data,
-            string err)
+        public async Task<string> Process(CloudEventRequest[] requests)
         {
-            if (!tenant.IngestInvalidPayloads || isValid) return;
+            foreach (var cloudEventRequest in requests)
+            {
+                await Process(cloudEventRequest, false);
+            }
+
+            // TODO what id should be returned? for now a new guid is returned to review logs
+            return Guid.NewGuid().ToString();
+        }
+
+        private void IngestInvalidPayloadIfNecessary(CloudEventRequest request, EventoTenantInfo tenant, bool isValid, JObject data, string err)
+        {
+            if (!tenant.IngestInvalidPayloads || isValid)
+            {
+                return;
+            }
+
             _logger.LogWarning($"Ingesting invalid payload for tenant: '{tenant.Name}'");
+
             var hasValidationErrorField = false;
+
             foreach (var property in data)
             {
-                if (!property.Key.Equals(tenant.ValidationErrorField)) continue;
+                if (!property.Key.Equals(tenant.ValidationErrorField))
+                {
+                    continue;
+                }
+
                 hasValidationErrorField = true;
-                _logger.LogWarning(
-                    $"Invalid payload has an existing validation error. Previous error was: {property.Value}");
+                _logger.LogWarning($"Invalid payload has an existing validation error. Previous error was: {property.Value}");
+
                 break;
             }
 
             if (!hasValidationErrorField)
+            {
                 data.Add(tenant.ValidationErrorField, err);
+            }
             else
+            {
                 data[tenant.ValidationErrorField] = err;
+            }
+
             request.Data = data;
         }
 
@@ -105,6 +149,7 @@ namespace Evento.Api.Services
                     };
 
                     error = JsonConvert.SerializeObject(new { Error = errors.Replace("'", "") }, settings);
+
                     return false;
                 }
 
@@ -112,8 +157,11 @@ namespace Evento.Api.Services
                     $"Request received with valid schema (id:{request.Id};source:{request.Source};type:{request.Type};dataSchema:{request.DataSchema})");
             }
             else
+            {
                 _logger.LogInformation(
                     $"Request received without schema (id:{request.Id};source:{request.Source};type:{request.Type})");
+
+            }
 
             return true;
         }
@@ -121,21 +169,25 @@ namespace Evento.Api.Services
         private string CheckIfMessageNeedCorrelationId(CloudEventRequest request, JObject data, string result)
         {
             var hasIdentifier = false;
-            foreach (KeyValuePair<string, JToken> property in data)
+
+            foreach (var property in data)
             {
-                if (!property.Key.ToLower().Equals(IdField.ToLower())) continue;
+                if (!property.Key.ToLower().Equals(IdField.ToLower()))
+                {
+                    continue;
+                }
+
                 hasIdentifier = true;
                 result = property.Value.ToString();
                 break;
             }
 
-            if (!hasIdentifier)
-            {
-                var id = new JValue(_idGenerator.GenerateId(string.Empty));
-                data.Add(IdField, id);
-                result = id.Value.ToString();
-                request.Data = data;
-            }
+            if (hasIdentifier) return result;
+
+            var id = new JValue(_idGenerator.GenerateId(string.Empty));
+            data.Add(IdField, id);
+            result = id.Value.ToString();
+            request.Data = data;
 
             return result;
         }

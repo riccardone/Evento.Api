@@ -4,5 +4,6 @@
     {
         string Link { get; }
         string Name { get; }
+        bool? KeepTheOrderOfMessages { get; }
     }
 }

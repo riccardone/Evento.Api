@@ -11,5 +11,6 @@ namespace Evento.Api.Model
         public string Domain { get; set; }
         public bool IngestInvalidPayloads { get; set; }
         public string ValidationErrorField { get; set; }
+        public bool? KeepOrderOfMessages { get; set; }
     }
 }

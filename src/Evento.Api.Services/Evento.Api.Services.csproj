@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Evento.Api.Model\Evento.Api.Model.csproj" />
+    <ProjectReference Include="..\Evento.MessageSender.AwsSqs\Evento.MessageSender.AwsSqs.csproj" />
     <ProjectReference Include="..\Evento.MessageSender.AzureServiceBus\Evento.MessageSender.AzureServiceBus.csproj" />
     <ProjectReference Include="..\Evento.MessageSender.EventStore\Evento.MessageSender.EventStore.csproj" />
   </ItemGroup>
