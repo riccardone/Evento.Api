@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Evento.Api.Model\Evento.Api.Model.csproj" />
+    <ProjectReference Include="..\Evento.MessageSender.AwsSqs\Evento.MessageSender.AwsSqs.csproj" />
     <ProjectReference Include="..\Evento.MessageSender.AzureServiceBus\Evento.MessageSender.AzureServiceBus.csproj" />
     <ProjectReference Include="..\Evento.MessageSender.EventStore\Evento.MessageSender.EventStore.csproj" />
   </ItemGroup>

@@ -46,6 +46,11 @@ namespace Evento.Api.Services
                 _logger.LogWarning($"Configuring '{nameof(MessageSenderInMemory)}' only for testing!");
                 return new MessageSenderInMemory();
             }
+            if (tenant.MessageBusLink.StartsWith("https://sqs"))
+            {
+                _logger.LogInformation($"Configuring '{nameof(MessageSender.AwsSqs.MessageSender)}'");
+                return new MessageSender.AwsSqs.MessageSender(new BusSettings(tenant.MessageBusLink, tenant.Identifier, tenant.KeepOrderOfMessages), _logger);
+            }
             if (tenant.MessageBusLink.StartsWith("Endpoint=sb"))
             {
                 _logger.LogWarning($"Configuring '{nameof(MessageSenderToServiceBus)}'");
